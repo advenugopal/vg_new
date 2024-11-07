@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home Page {% endblock title %}
+
+
+
+{% block content %}
+<div>
+<img src="{% static 'images/girl1.jpg' %}" alt="Wallpaper" style="height:600px; width:1600px;">
+</div>
+<div>
+  <h1 style="text-align:center;">Explore our products collection!!!</h1>
+  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div>
+
+<div class="container">
+<div class="row">
+{% for product in products %}
+  <div class="col-9 col-sm-12 col-md-4">
+<div class="card" style="width: 18rem;">
+  <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height:250px;width:280px;">
+  <div class="card-body">
+    <h5 class="card-title">{{ product.name }}</h5>
+    <p class="card-text">{{ product.price }}</p>
+    <div></div>
+    <a href="{% url 'add_prod' %}" class="btn btn-primary">Add Product</a>
+    <a href="{% url 'edit_product' product.id %}" class="btn btn-primary">Edit Product</a>
+    </div>
+  <div col-md-4>
+    <a href="{% url 'delete_product' product.id %}" class="btn btn-primary">Delete Product</a>
+    {% if product.stock <= 0 %}
+        <p class="text-justify my_prod_text"><b>out of stock</b></p>
+        {% else %}
+        <a class="btn btn-secondary" href="{% url 'add_cart' product.id %}">Add to cart</a>
+        {% endif %}
+    </div>
+
+
+
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+  </div>
+
+{% endblock content %}
